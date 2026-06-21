@@ -1,0 +1,167 @@
+<template>
+    <div class="discovery-root">
+
+
+        <div class="search-bar">
+            <div class="search-mode-toggle">
+                <button
+                    class={cityModeClass}
+                    data-mode="city"
+                    onclick={handleModeSwitch}>
+                    By City
+                </button>
+                <button
+                    class={radiusModeClass}
+                    data-mode="radius"
+                    onclick={handleModeSwitch}>
+                    By Radius
+                </button>
+            </div>
+
+            <template lwc:if={isCityMode}>
+                <div class="search-inputs">
+                    <input
+                        type="text"
+                        class="search-input"
+                        placeholder="e.g. Berlin"
+                        value={cityInput}
+                        onkeydown={handleCityKeydown}
+                        oninput={handleCityInput} />
+                    <button class="btn-primary" onclick={handleSearch} disabled={isLoading}>
+                        Search
+                    </button>
+                </div>
+            </template>
+
+            <template lwc:if={isRadiusMode}>
+                <div class="search-inputs">
+                    <input
+                        type="number"
+                        class="search-input search-input--sm"
+                        placeholder="Latitude"
+                        value={latInput}
+                        oninput={handleLatInput} />
+                    <input
+                        type="number"
+                        class="search-input search-input--sm"
+                        placeholder="Longitude"
+                        value={lngInput}
+                        oninput={handleLngInput} />
+                    <input
+                        type="number"
+                        class="search-input search-input--xs"
+                        placeholder="Radius km"
+                        value={radiusInput}
+                        oninput={handleRadiusInput} />
+                    <button class="btn-primary" onclick={handleSearch} disabled={isLoading}>
+                        Search
+                    </button>
+                </div>
+            </template>
+
+            <div class="filter-row">
+                <select class="filter-select" onchange={handleCategoryChange} value={selectedCategory}>
+                    <option value="">All categories</option>
+                    <template for:each={categories} for:item="cat">
+                        <option key={cat} value={cat}>{cat}</option>
+                    </template>
+                </select>
+
+                <select class="filter-select" onchange={handleGoodForChange} value={selectedGoodFor}>
+                    <option value="">All travellers</option>
+                    <template for:each={goodForOptions} for:item="gf">
+                        <option key={gf} value={gf}>{gf}</option>
+                    </template>
+                </select>
+
+                <template lwc:if={hasResults}>
+                    <span class="result-count">
+                        {resultCountLabel}
+                    </span>
+                </template>
+            </div>
+        </div>
+
+
+        <div class="content-area">
+
+            <div class="map-panel">
+                <div class="map-container" lwc:dom="manual" lwc:ref="mapContainer"></div>
+
+                <template lwc:if={isLoading}>
+                    <div class="map-overlay map-overlay--loading">
+                        <div class="spinner"></div>
+                        <p>Finding activities…</p>
+                    </div>
+                </template>
+
+                <template lwc:if={showEmpty}>
+                    <div class="map-overlay map-overlay--empty">
+                        <p class="empty-icon">🗺️</p>
+                        <p class="empty-title">No activities found</p>
+                        <p class="empty-hint">Try a different city or expand the radius.</p>
+                    </div>
+                </template>
+
+                <template lwc:if={showPreSearch}>
+                    <div class="map-overlay map-overlay--presearch">
+                        <p class="empty-icon">📍</p>
+                        <p class="empty-title">Search to explore activities</p>
+                        <p class="empty-hint">Enter a city name or coordinates above.</p>
+                    </div>
+                </template>
+
+                <template lwc:if={hasError}>
+                    <div class="map-overlay map-overlay--error">
+                        <p class="empty-icon">⚠️</p>
+                        <p class="empty-title">Something went wrong</p>
+                        <p class="empty-hint">{errorMessage}</p>
+                        <button class="btn-secondary" onclick={handleSearch}>Retry</button>
+                    </div>
+                </template>
+
+                <template lwc:if={isCapped}>
+                    <div class="cap-banner">
+                        Showing first 200 results — refine your search to see more.
+                    </div>
+                </template>
+            </div>
+
+            <div class="list-panel">
+                <ul class="activity-list" role="list">
+                    <template for:each={activities} for:item="activity">
+                        <li
+                            key={activity.id}
+                            class={activity.listItemClass}
+                            data-id={activity.id}
+                            onclick={handleListItemClick}
+                            role="button"
+                            tabindex="0"
+                            onkeydown={handleListItemKeydown}>
+
+                            <div class="activity-card">
+                                <div class="card-header">
+                                    <span class="category-dot" style={activity.dotStyle}></span>
+                                    <span class="card-title">{activity.name}</span>
+                                </div>
+                                <div class="card-meta">
+                                    <span class="card-location">{activity.city}, {activity.country}</span>
+                                    <template lwc:if={activity.goodFor}>
+                                        <span class="card-tag">{activity.goodFor}</span>
+                                    </template>
+                                </div>
+                                <template lwc:if={activity.listingSummary}>
+                                    <p class="card-summary">{activity.listingSummary}</p>
+                                </template>
+                                <template lwc:if={activity.supplierName}>
+                                    <p class="card-supplier">by {activity.supplierName}</p>
+                                </template>
+                            </div>
+                        </li>
+                    </template>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</template>

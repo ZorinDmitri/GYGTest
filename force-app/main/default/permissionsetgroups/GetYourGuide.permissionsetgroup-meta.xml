@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>GetYourGuide</label>
+    <permissionSets>ActivityDiscoveryMap_User</permissionSets>
+    <permissionSets>Geocode_MDT_Admin</permissionSets>
+    <permissionSets>Mistral_MDT_Admin</permissionSets>
+    <permissionSets>Supplier_Admin</permissionSets>
+    <permissionSets>Travel_Activity_Admin</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>

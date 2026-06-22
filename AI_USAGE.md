@@ -11,11 +11,11 @@
 
 1. I have the following structure in my salesforce org:
    Custom Object:
-   Travel_Activity**c
+   Travel_Activity__c
    Custom Fields:
-   SupplierNotes**c (Long Text Area 32768)
+   Supplier_Notes__c (Long Text Area 32768)
    Name (activity name)
-   City\_\_c (city where this traveller activity is taking place)
+   City__c (city where this traveller activity is taking place)
 
 I want you to help me design salesforce apex class structure to enable the following:
 

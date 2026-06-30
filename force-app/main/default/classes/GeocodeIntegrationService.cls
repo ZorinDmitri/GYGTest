@@ -4,7 +4,6 @@ public with sharing class GeocodeIntegrationService {
   public List<GeocodeDTO.GeocodeResult> geocode(
     List<Travel_Activity__C> activities
   ) {
-    //API key is read from Geocoding_Config__mdt at runtime.
     Geocoding_Config__mdt config = GeocodingConfigSelector.getGeocodingConfig();
 
     List<GeocodeDTO.GeocodeResult> results = new List<GeocodeDTO.GeocodeResult>();

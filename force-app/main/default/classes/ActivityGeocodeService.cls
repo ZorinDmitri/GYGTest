@@ -43,7 +43,6 @@ public with sharing class ActivityGeocodeService {
 
     List<GeocodeDTO.GeocodeResult> results = geocodeSvc.geocode(activities);
 
-    // Separate successes and failures.
     List<Travel_Activity__C> toUpdate = new List<Travel_Activity__C>();
     List<GeocodeDTO.GeocodeResult> loggableResults = new List<GeocodeDTO.GeocodeResult>();
 

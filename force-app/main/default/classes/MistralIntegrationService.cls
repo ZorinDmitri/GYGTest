@@ -7,14 +7,14 @@ public with sharing class MistralIntegrationService {
   private final MistralIntegrationService mistralService;
   private final TravelActivitySelector activitySelector;
   private final IntegrationLogSelector logSelector;
-  private final IntegrationLogService logSvc; // Add this
+  private final IntegrationLogService logSvc; 
   private final Mistral_Config__mdt config;
 
   // Production constructor
   public MistralIntegrationService() {
     this.config = MistralConfigSelector.getMistralConfig();
     this.logSelector = new IntegrationLogSelector();
-    this.logSvc = new IntegrationLogService(); // Initialize log service
+    this.logSvc = new IntegrationLogService();
   }
 
   // Test-injectable constructor

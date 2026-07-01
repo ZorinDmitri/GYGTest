@@ -4,10 +4,9 @@ public with sharing class MistralIntegrationService {
   private static final Integer MAX_TOKENS = 512;
   private static final Double TEMPERATURE = 0.7;
 
-  private final MistralIntegrationService mistralService;
   private final TravelActivitySelector activitySelector;
   private final IntegrationLogSelector logSelector;
-  private final IntegrationLogService logSvc; 
+  private final IntegrationLogService logSvc;
   private final Mistral_Config__mdt config;
 
   // Production constructor
